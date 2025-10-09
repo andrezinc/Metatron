@@ -20,24 +20,60 @@ import NetworkExtension
 struct IphoneView: View {
     @ObservedObject var conexao = Host()
     var body: some View {
-        VStack {
-            List(conexao.avaliedPeers, id:\.self){ par in
-                
-                Text(par.displayName)
-                    .foregroundStyle(.white)
-                
+        
+        VStack{
+            
+            Button(action: {conexao.sendOne(time: .time1)} ){
+                Text("mandar 1")
+                    .background(.white)
+                    .padding()
             }
-            HStack{
-                Button(action: conexao.sendOne){
-                    Text("mandar")
-                        .background(.white)
-                        .padding()
-                }
-                Button(action: conexao.sendMinusOne){
-                    Text("mandar")
-                        .background(.white)
-                        .padding()
-                }
+            Button(action: {conexao.sendMinusOne(time: .time1)}){
+                Text("mandar 1")
+                    .background(.white)
+                    .padding()
+            }
+            
+            Button(action: {conexao.sendOne(time: .time2)} ){
+                Text("mandar 2 ")
+                    .background(.white)
+                    .padding()
+            }
+            Button(action: {conexao.sendMinusOne(time: .time2)}){
+                Text("mandar 2")
+                    .background(.white)
+                    .padding()
+            }
+            
+            Button(action: {conexao.sendOne(time: .time3)} ){
+                Text("mandar 3")
+                    .background(.white)
+                    .padding()
+            }
+            Button(action: {conexao.sendMinusOne(time: .time3)}){
+                Text("mandar 3")
+                    .background(.white)
+                    .padding()
+            }
+            Button(action: {conexao.sendOne(time: .time4)} ){
+                Text("mandar 4")
+                    .background(.white)
+                    .padding()
+            }
+            Button(action: {conexao.sendMinusOne(time: .time4)}){
+                Text("mandar 4")
+                    .background(.white)
+                    .padding()
+            }
+            Button(action: {conexao.sendOne(time: .time5)} ){
+                Text("mandar 5")
+                    .background(.white)
+                    .padding()
+            }
+            Button(action: {conexao.sendMinusOne(time: .time5)}){
+                Text("mandar 5")
+                    .background(.white)
+                    .padding()
             }
         } .padding()
     }

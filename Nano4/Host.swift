@@ -8,6 +8,11 @@
 import Foundation
 import MultipeerConnectivity
 
+struct equipes: Codable{
+    var time : Int
+    var numero: Int
+}
+
 enum times {
     case time1
     case time2
@@ -19,12 +24,12 @@ enum times {
 final class Host: NSObject, ObservableObject{
     
     let serviceType = "points"
-    let peerId = MCPeerID(displayName: String(Int.random(in: 0...100000)))
+    let peerId = MCPeerID(displayName: String(Int.random(in: 0...1000000)))
     let peerBrowser : MCNearbyServiceBrowser
     let peerSession : MCSession
     let peerAdvertiser:  MCNearbyServiceAdvertiser
     @Published var avaliedPeers = [MCPeerID]()
-    @Published var pontos = 0
+    @Published var pontos = [0,0,0,0,0]
     
     override init(){
         peerSession = MCSession(
@@ -42,7 +47,6 @@ final class Host: NSObject, ObservableObject{
             serviceType: serviceType
         )
         
-        
         super.init()
         
         peerBrowser.delegate = self
@@ -52,42 +56,126 @@ final class Host: NSObject, ObservableObject{
         peerAdvertiser.startAdvertisingPeer()
         peerBrowser.startBrowsingForPeers()
     }
-//    func sendOne(time : times){
-    func sendOne(){
+    
+    func sendOne(time : times){
         if !peerSession.connectedPeers.isEmpty{
-//            switch time {case .time1:
-//                <#code#>
-//            case .time2:
-//                <#code#>
-//            case .time3:
-//                <#code#>
-//            case .time4:
-//                <#code#>
-//            case .time5:
-//                <#code#>
-//            }
-            
-            do {
-                try peerSession.send( String("1").data(using: .utf8)!, toPeers: peerSession.connectedPeers, with: .reliable)
-            }catch{
-                print(error.localizedDescription)
+            switch time {
+            case .time1:
+                do {
+                    let pck = equipes(time: 0, numero: 1)
+                    let enconder = JSONEncoder()
+                    let data = try enconder.encode(pck)
+                    try peerSession.send( data, toPeers: peerSession.connectedPeers, with: .reliable)
+                }catch{
+                    print(error.localizedDescription)
+                }
+                
+            case .time2:
+                do {
+                    let pck = equipes(time: 1, numero: 1)
+                    let enconder = JSONEncoder()
+                    let data = try enconder.encode(pck)
+                    try peerSession.send( data, toPeers: peerSession.connectedPeers, with: .reliable)
+                }catch{
+                    print(error.localizedDescription)
+                }
+            case .time3:
+                do {
+                    let pck = equipes(time: 2, numero: 1)
+                    let enconder = JSONEncoder()
+                    let data = try enconder.encode(pck)
+                    try peerSession.send( data, toPeers: peerSession.connectedPeers, with: .reliable)
+                }catch{
+                    print(error.localizedDescription)
+                }
+            case .time4:
+                do {
+                    let pck = equipes(time: 3, numero: 1)
+                    let enconder = JSONEncoder()
+                    let data = try enconder.encode(pck)
+                    try peerSession.send( data, toPeers: peerSession.connectedPeers, with: .reliable)
+                }catch{
+                    print(error.localizedDescription)
+                }
+            case .time5:
+                do {
+                    let pck = equipes(time: 4, numero: 1)
+                    let enconder = JSONEncoder()
+                    let data = try enconder.encode(pck)
+                    try peerSession.send( data, toPeers: peerSession.connectedPeers, with: .reliable)
+                }catch{
+                    print(error.localizedDescription)
+                }
             }
         }
     }
     
-    func sendMinusOne(){
+    func sendMinusOne(time : times){
         if !peerSession.connectedPeers.isEmpty{
-            do {
-                try peerSession.send( String("-1").data(using: .utf8)!, toPeers: peerSession.connectedPeers, with: .reliable)
-            }catch{
-                print(error.localizedDescription)
+            switch time {
+            case .time1:
+                do {
+                    let pck = equipes(time: 0, numero: -1)
+                    let enconder = JSONEncoder()
+                    let data = try enconder.encode(pck)
+                    try peerSession.send( data, toPeers: peerSession.connectedPeers, with: .reliable)
+                }catch{
+                    print(error.localizedDescription)
+                }
+            case .time2:
+                do {
+                    let pck = equipes(time: 1, numero: -1)
+                    let enconder = JSONEncoder()
+                    let data = try enconder.encode(pck)
+                    try peerSession.send( data, toPeers: peerSession.connectedPeers, with: .reliable)
+                }catch{
+                    print(error.localizedDescription)
+                }
+            case .time3:
+                do {
+                    let pck = equipes(time: 2, numero: -1)
+                    let enconder = JSONEncoder()
+                    let data = try enconder.encode(pck)
+                    try peerSession.send( data, toPeers: peerSession.connectedPeers, with: .reliable)
+                }catch{
+                    print(error.localizedDescription)
+                }
+            case .time4:
+                do {
+                    let pck = equipes(time: 3, numero: -1)
+                    let enconder = JSONEncoder()
+                    let data = try enconder.encode(pck)
+                    try peerSession.send( data, toPeers: peerSession.connectedPeers, with: .reliable)
+                }catch{
+                    print(error.localizedDescription)
+                }
+            case .time5:
+                do {
+                    let pck = equipes(time: 4, numero: -1)
+                    let enconder = JSONEncoder()
+                    let data = try enconder.encode(pck)
+                    try peerSession.send( data, toPeers: peerSession.connectedPeers, with: .reliable)
+                }catch{
+                    print(error.localizedDescription)
+                }
             }
         }
     }
     
     @MainActor
-    func changeValue(valor : Int){
-        self.pontos = valor
+    func changeValue(valor : Data){
+        do{
+            pontos = [0,0,0,0,0]
+            
+            let decoder = JSONDecoder()
+            let data = try decoder.decode(equipes.self, from: valor)
+            print(data.time)
+            print(data.numero)
+            pontos[data.time] = data.numero
+            
+        }catch{
+            print(error)
+        }
     }
     
 }
@@ -100,8 +188,8 @@ extension Host: MCSessionDelegate{
     
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
         Task{
-            await changeValue(valor:  Int(String(data:data, encoding: .utf8) ?? "0" ) ?? 0 )
-        }        
+            await changeValue(valor: data)
+        }
     }
     
     func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) {
@@ -120,18 +208,18 @@ extension Host: MCSessionDelegate{
 extension Host: MCBrowserViewControllerDelegate{
     func browserViewControllerDidFinish(_ browserViewController: MCBrowserViewController) {
         
-#if os(macOS) || os(tvOS)
+#if os(macOS)
         browserViewController.dismiss(true)
-#elseif os(iOS)
+#elseif os(iOS) || os(tvOS)
         browserViewController.dismiss(animated: true)
 #endif
         
     }
     
     func browserViewControllerWasCancelled(_ browserViewController: MCBrowserViewController) {
-#if os(macOS) || os(tvOS)
+#if os(macOS)
         browserViewController.dismiss(true)
-#elseif os(iOS)
+#elseif os(iOS) || os(tvOS)
         browserViewController.dismiss(animated: true)
 #endif
         
