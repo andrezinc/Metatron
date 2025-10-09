@@ -11,12 +11,14 @@ import SwiftUI
 struct Nano4App: App {
     
     var body: some Scene {
-#if os(macOS)
+#if os(macOS) // mac
         WindowGroup { MacView() }
-#elseif os(iOS)
+#elseif os(iOS) // iphone
         WindowGroup { IphoneView() }
+#elseif os(tvOS) //tv apple
+        WindowGroup { MacView() }
 #else
-        WindowGroup { Text("nem tem ai") }
+        WindowGroup { Text("nao tem nada") }
 #endif
     }
 }

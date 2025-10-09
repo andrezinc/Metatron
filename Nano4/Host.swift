@@ -120,7 +120,7 @@ extension Host: MCSessionDelegate{
 extension Host: MCBrowserViewControllerDelegate{
     func browserViewControllerDidFinish(_ browserViewController: MCBrowserViewController) {
         
-#if os(macOS)
+#if os(macOS) || os(tvOS)
         browserViewController.dismiss(true)
 #elseif os(iOS)
         browserViewController.dismiss(animated: true)
@@ -129,7 +129,7 @@ extension Host: MCBrowserViewControllerDelegate{
     }
     
     func browserViewControllerWasCancelled(_ browserViewController: MCBrowserViewController) {
-#if os(macOS)
+#if os(macOS) || os(tvOS)
         browserViewController.dismiss(true)
 #elseif os(iOS)
         browserViewController.dismiss(animated: true)
